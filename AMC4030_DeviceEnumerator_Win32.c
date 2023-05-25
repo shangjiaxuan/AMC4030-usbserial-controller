@@ -44,48 +44,48 @@ void AMC4030_DeviceEnumerator_Reset(AMC4030_DeviceEnumerator* obj)
 
 int AMC4030_DeviceEnumerator_Next(AMC4030_DeviceEnumerator* obj)
 {
-	wchar_t buffer[1024] = {0};
+	char buffer[2048] = {0};
 	SP_DEVINFO_DATA data;
 	ZeroMemory(&data, sizeof(data));
 	data.cbSize = sizeof(data);
 	for (;SetupDiEnumDeviceInfo(obj->hDevInfo, obj->index, &data); ++obj->index) {
-		if (!SetupDiGetDeviceRegistryPropertyW(obj->hDevInfo, &data, SPDRP_HARDWAREID, NULL, 
+		if (!SetupDiGetDeviceRegistryPropertyA(obj->hDevInfo, &data, SPDRP_HARDWAREID, NULL, 
 			(PBYTE)buffer, sizeof(buffer), NULL)) {
 			break;
 		}
 		for (int i = 0; i < 1024 && buffer[i]; ++i) {
-			buffer[i] = towlower(buffer[i]);
+			buffer[i] = tolower(buffer[i]);
 		}
-		if (!wcsstr(buffer, L"vid_1a86")) {
+		if (!strstr(buffer, "vid_1a86")) {
 			continue;
 		}
-		if (!wcsstr(buffer, L"pid_7523")) {
+		if (!strstr(buffer, "pid_7523")) {
 			continue;
 		}
 
-		if (!SetupDiGetDeviceRegistryPropertyW(obj->hDevInfo, &data, SPDRP_CLASS, NULL, 
+		if (!SetupDiGetDeviceRegistryPropertyA(obj->hDevInfo, &data, SPDRP_CLASS, NULL,
 			(PBYTE)buffer, sizeof(buffer), NULL)) {
 			break;
 		}
 		for (int i = 0; i < 1024 && buffer[i]; ++i) {
-			buffer[i] = towlower(buffer[i]);
+			buffer[i] = tolower(buffer[i]);
 		}
-		if (!wcsstr(buffer, L"ports")) {
+		if (!strstr(buffer, "ports")) {
 			continue;
 		}
 
-		if (!SetupDiGetDeviceRegistryPropertyW(obj->hDevInfo, &data, SPDRP_FRIENDLYNAME, NULL, 
+		if (!SetupDiGetDeviceRegistryPropertyA(obj->hDevInfo, &data, SPDRP_FRIENDLYNAME, NULL,
 			(PBYTE)buffer, sizeof(buffer), NULL)) {
 			break;
 		}
-		const wchar_t com_pattern[] = L"(COM";
-		wchar_t* start = wcsstr(buffer, com_pattern);
+		const char com_pattern[] = "(COM";
+		char* start = strstr(buffer, com_pattern);
 		if (!start) {
 			continue;
 		}
-		start += (sizeof(com_pattern)/sizeof(wchar_t)) - 1;
+		start += (sizeof(com_pattern)/sizeof(char)) - 1;
 		++obj->index;
-		return _wtoi(start);
+		return atoi(start);
 	}
 	obj->index = 0;
 	return -1;

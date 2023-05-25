@@ -106,10 +106,10 @@ AMC4030_usb_protocol_context* AMC4030_usb_protocol_Create(int com_no)
 {
 	AMC4030_usb_protocol_context* obj = NULL;
 	HRESULT res = S_OK;
-	wchar_t comname[21] = {0};
-	_snwprintf(comname, 20, L"\\\\.\\COM%d", com_no);
+	char comname[21] = {0};
+	snprintf(comname, 20, "\\\\.\\COM%d", com_no);
 
-	HANDLE hFile = CreateFileW(comname, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
+	HANDLE hFile = CreateFileA(comname, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
 	if (hFile == INVALID_HANDLE_VALUE) {
 		goto CLEANUP;
 	}
