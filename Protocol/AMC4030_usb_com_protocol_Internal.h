@@ -4,6 +4,7 @@
 #include "AMC4030_usb_com_protocol.h"
 
 #ifdef _WIN32
+#define MICROSOFT_WINDOWS_WINBASE_H_DEFINE_INTERLOCKED_CPLUSPLUS_OVERLOADS 0
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #endif

@@ -22,6 +22,7 @@ typedef struct AMC4030_InstanceMonitor
 	MUTEX_T listener_lock;
 	// triggers on status update
 	CallbackChain* status_listeners;
+	CallbackChain* onEnd;
 } AMC4030_InstanceMonitor;
 
 int AMC4030_InstanceMonitor_Start(AMC4030_InstanceMonitor* obj);

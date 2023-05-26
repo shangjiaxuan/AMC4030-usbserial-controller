@@ -1,6 +1,11 @@
 #include "AMC4030_DeviceEnumerator.h"
 
+#ifndef MICROSOFT_WINDOWS_WINBASE_H_DEFINE_INTERLOCKED_CPLUSPLUS_OVERLOADS
+#define MICROSOFT_WINDOWS_WINBASE_H_DEFINE_INTERLOCKED_CPLUSPLUS_OVERLOADS 0
+#endif
+#ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
+#endif
 #include <Windows.h>
 
 #include <SetupAPI.h>
@@ -98,6 +103,8 @@ int AMC4030_DeviceEnumerator_GetCurrentFriendlyName(AMC4030_DeviceEnumerator* ob
 		return -1;
 	}
 	SP_DEVINFO_DATA data;
+	ZeroMemory(&data, sizeof(data));
+	data.cbSize = sizeof(data);
 	if (!SetupDiEnumDeviceInfo(obj->hDevInfo, obj->index - 1, &data)) {
 		return -1;
 	}

@@ -16,6 +16,9 @@ void AMC4030_InstanceMonitorThreadProc(AMC4030_InstanceMonitor* obj)
 		Sleep(obj->update_interval);
 	}
 	obj->is_running = 0;
+	if (obj->onEnd) {
+		CallbackChain_Invoke(obj->onEnd);
+	}
 }
 
 int AMC4030_InstanceMonitor_Start(AMC4030_InstanceMonitor* obj)
