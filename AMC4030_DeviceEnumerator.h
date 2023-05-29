@@ -17,4 +17,8 @@ const char* AMC4030_DeviceEnumerator_Next(AMC4030_DeviceEnumerator* obj);
 
 int AMC4030_DeviceEnumerator_GetCurrentFriendlyName(AMC4030_DeviceEnumerator* obj, char* name_buffer, int buffer_size);
 
+#include "..\SerialDevice_Vtable.h"
+
+extern const SerialDevice_Enumerator_Vtable ch340_usbserial_port_enumerator;
+
 #endif

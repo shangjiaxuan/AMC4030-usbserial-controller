@@ -102,15 +102,28 @@ int AMC4030_usb_protocol_FinishCommand(AMC4030_usb_protocol_context* obj)
 #include <stdlib.h>
 #include <stdio.h>
 
-AMC4030_usb_protocol_context* AMC4030_usb_protocol_Create(int com_no)
+AMC4030_usb_protocol_context* AMC4030_usb_protocol_Create(const char* commfile, int* error)
 {
 	AMC4030_usb_protocol_context* obj = NULL;
 	HRESULT res = S_OK;
-	char comname[21] = {0};
-	snprintf(comname, 20, "\\\\.\\COM%d", com_no);
-
-	HANDLE hFile = CreateFileA(comname, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
+	int mapped_error = AMC4030_USB_PROTO_NO_ERROR;
+	HANDLE hFile = CreateFileA(commfile, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
 	if (hFile == INVALID_HANDLE_VALUE) {
+		res = GetLastError();
+		switch (HRESULT_CODE(res)) {
+			default:
+				mapped_error = AMC4030_USB_PROTO_COMM_INIT_GENERIC_ERROR;
+				break;
+			case ERROR_ACCESS_DENIED:
+				mapped_error = AMC4030_USB_PROTO_COMM_INIT_FILE_NO_PERM;
+				break;
+			case ERROR_SHARING_VIOLATION:
+				mapped_error = AMC4030_USB_PROTO_COMM_INIT_FILE_IN_USE;
+				break;
+			case ERROR_FILE_NOT_FOUND:
+				mapped_error = AMC4030_USB_PROTO_COMM_INIT_FILE_NOT_FOUND;
+				break;
+		}
 		goto CLEANUP;
 	}
 	COMMTIMEOUTS timeouts = {0};
@@ -122,25 +135,37 @@ AMC4030_usb_protocol_context* AMC4030_usb_protocol_Create(int com_no)
 	timeouts.WriteTotalTimeoutMultiplier = 20;
 	timeouts.WriteTotalTimeoutConstant = 100;
 	if (!SetCommTimeouts(hFile, &timeouts)) {
+		mapped_error = AMC4030_USB_PROTO_COMM_INIT_MODE_FAILED;
 		goto CLEANUP;
 	}
 	if (!SetCommMask(hFile, EV_RXCHAR)) {
+		mapped_error = AMC4030_USB_PROTO_COMM_INIT_MODE_FAILED;
 		goto CLEANUP;
 	}
 	DCB dcb_info = { 0 };
 	if (!GetCommState(hFile, &dcb_info)) {
+		mapped_error = AMC4030_USB_PROTO_COMM_INIT_MODE_FAILED;
 		goto CLEANUP;
 	}
 	if (!BuildCommDCBA("baud=115200 parity=N data=8 stop=1", &dcb_info)) {
+		mapped_error = AMC4030_USB_PROTO_COMM_INIT_MODE_FAILED;
 		goto CLEANUP;
 	}
 	if (!SetCommState(hFile, &dcb_info)) {
+		mapped_error = AMC4030_USB_PROTO_COMM_INIT_MODE_FAILED;
 		goto CLEANUP;
 	}
 	obj = (AMC4030_usb_protocol_context*)calloc(1, sizeof(AMC4030_usb_protocol_context));
 	if (obj) {
 		obj->hFile = hFile;
 		InitializeCriticalSection(&obj->lock);
+	}
+	else {
+		mapped_error = AMC4030_USB_PROTO_COMM_INIT_OUT_OF_MEMORY;
+		goto CLEANUP;
+	}
+	if (error) {
+		*error = mapped_error;
 	}
 	return obj;
 CLEANUP:
@@ -149,6 +174,9 @@ CLEANUP:
 	}
 	if (obj) {
 		free(obj);
+	}
+	if (error) {
+		*error = mapped_error;
 	}
 	return NULL;
 }
