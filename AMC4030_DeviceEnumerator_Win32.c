@@ -12,10 +12,13 @@
 
 #include <stdlib.h>
 
+#include <stdio.h>
+
 typedef struct AMC4030_DeviceEnumerator
 {
 	HDEVINFO hDevInfo;
 	DWORD index;
+	char name_buffer[4 + 3 + 3 + 1];
 }AMC4030_DeviceEnumerator;
 
 AMC4030_DeviceEnumerator* AMC4030_DeviceEnumerator_Create()
@@ -47,7 +50,7 @@ void AMC4030_DeviceEnumerator_Reset(AMC4030_DeviceEnumerator* obj)
 	obj->index = 0;
 }
 
-int AMC4030_DeviceEnumerator_Next(AMC4030_DeviceEnumerator* obj)
+const char* AMC4030_DeviceEnumerator_Next(AMC4030_DeviceEnumerator* obj)
 {
 	char buffer[2048] = {0};
 	SP_DEVINFO_DATA data;
@@ -89,11 +92,16 @@ int AMC4030_DeviceEnumerator_Next(AMC4030_DeviceEnumerator* obj)
 			continue;
 		}
 		start += (sizeof(com_pattern)/sizeof(char)) - 1;
+		int num = atoi(start);
+		if (num<0 || num > 256) {
+			continue;
+		}
+		snprintf(obj->name_buffer, sizeof(obj->name_buffer), "\\\\.\\COM%d", num);
 		++obj->index;
-		return atoi(start);
+		return obj->name_buffer;
 	}
 	obj->index = 0;
-	return -1;
+	return NULL;
 }
 
 
