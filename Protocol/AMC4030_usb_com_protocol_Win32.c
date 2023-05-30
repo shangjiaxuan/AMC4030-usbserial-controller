@@ -38,15 +38,17 @@ int AMC4030_usb_protocol_FinishCommand(AMC4030_usb_protocol_context* obj)
 		int expected_size_read = 0;
 		int four_byte_verified = 0;
 		int fifth_byte_verified = 0;
-		int poll_count = 0;
-		while (poll_count < 200) {
+		uint64_t start = GetTickCount64();
+		while (expected_size > obj->read_bytes) {
 			DWORD errors;
 			COMSTAT stat;
 			if (!ClearCommError(obj->hFile, &errors, &stat)) {
 				return AMC4030_USB_PROTO_COMM_READ_ERROR;
 			}
 			if (!stat.cbInQue) {
-				++poll_count;
+				if (GetTickCount64() - start >= 1000 /* 200 ms total timeout */) {
+					return AMC4030_USB_PROTO_COMM_READ_ERROR;
+				}
 				Sleep(1);
 				continue;
 			}

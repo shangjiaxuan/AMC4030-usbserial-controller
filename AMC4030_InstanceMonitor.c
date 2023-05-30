@@ -55,6 +55,7 @@ int AMC4030_InstanceMonitor_Start(AMC4030_InstanceMonitor* obj)
 		return -1;
 	}
 	obj->is_running = 1;
+	obj->update_error = 0;
 	obj->monitorThread = StartThread(AMC4030_InstanceMonitorThreadProc, obj);
 	if (!obj->monitorThread) {
 		obj->is_running = 0;

@@ -47,6 +47,7 @@ typedef struct AMC4030_UI_Object
 	CallbackChain updateHook;
 	CallbackChain deviceRefreshHook;
 
+	int X_step_enabled, Y_step_enabled, Z_step_enabled;
 	ButtonLongCallback X_plus;
 	ButtonLongCallback X_minus;
 	ButtonLongCallback Y_plus;
