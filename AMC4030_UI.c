@@ -1,8 +1,62 @@
-#include "AMC4030_UI.h"
+#include "AMC4030_UI_Internal.h"
 
 #include <userint.h>
 
-#include "../toolbox.h"
+#ifndef errChk
+#define errChk(fCall) if (error = (fCall), error < 0) \
+{goto Error;} else
+#endif
+
+#include <stdlib.h>
+
+AMC4030_UI_Object* AMC4030_UI_Object_Create(const char* uir_file, int use_as_standalone, int* error)
+{
+	AMC4030_UI_Object* obj = (AMC4030_UI_Object*)malloc(sizeof(AMC4030_UI_Object));
+	if (!obj) {
+		if (error) {
+			*error = UIEOutOfMemory;
+		}
+		return NULL;
+	}
+	memset(obj, 0, sizeof(AMC4030_UI_Object));
+	int res = AMC4030_UI_Object_Initialize(obj, uir_file, use_as_standalone);
+	if (res < 0) {
+		free(obj);
+		if (error) {
+			*error = res;
+		}
+		return NULL;
+	}
+	if (error) {
+		*error = UIENoError;
+	}
+	return obj;
+}
+
+void AMC4030_UI_Object_Delete(AMC4030_UI_Object* obj)
+{
+	AMC4030_UI_Object_Destroy(obj);
+	free(obj);
+}
+
+int AMC4030_UI_Object_StartUI(AMC4030_UI_Object* obj)
+{
+	return SerialDevice_UI_Object_StartUI(&obj->base);
+}
+
+int AMC4030_UI_Object_EndUI(AMC4030_UI_Object* obj)
+{
+	return SerialDevice_UI_Object_EndUI(&obj->base);
+}
+
+int AMC4030_UI_Object_ShowUI(AMC4030_UI_Object* obj)
+{
+	return SerialDevice_UI_Object_ShowUI(&obj->base);
+}
+int AMC4030_UI_Object_HideUI(AMC4030_UI_Object* obj)
+{
+	return SerialDevice_UI_Object_HideUI(&obj->base);
+}
 
 void AMC4030_UI_Object_Destroy(AMC4030_UI_Object* obj)
 {
@@ -101,4 +155,54 @@ int AMC4030_UI_Object_SetOutput(AMC4030_UI_Object* obj, uint8_t out_no, uint8_t 
 {
 	return AMC4030_usb_protocol_SetCoil(obj->monitor.connection, out_no, val);
 }
+
+
+#ifdef AMC4030_UI_DYNAMIC
+#ifdef _WIN32
+#ifndef MICROSOFT_WINDOWS_WINBASE_H_DEFINE_INTERLOCKED_CPLUSPLUS_OVERLOADS
+#define MICROSOFT_WINDOWS_WINBASE_H_DEFINE_INTERLOCKED_CPLUSPLUS_OVERLOADS 0
+#endif
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <Windows.h>
+
+BOOL WINAPI DllMain(
+	HINSTANCE hinstDLL,  // handle to DLL module
+	DWORD fdwReason,     // reason for calling function
+	LPVOID lpvReserved)  // reserved
+{
+	// Perform actions based on the reason for calling.
+	switch (fdwReason) {
+		case DLL_PROCESS_ATTACH:
+			if (InitCVIRTE(hinstDLL, 0, 0) == 0)
+				return 0; /* out of memory */
+			/* your other ATTACH code */
+			// Initialize once for each new process.
+			// Return FALSE to fail DLL load.
+			break;
+
+		case DLL_THREAD_ATTACH:
+			// Do thread-specific initialization.
+			break;
+
+		case DLL_THREAD_DETACH:
+			// Do thread-specific cleanup.
+			break;
+
+		case DLL_PROCESS_DETACH:
+			CloseCVIRTE();
+			if (lpvReserved != NULL) {
+				break; // do not do cleanup if process termination scenario
+			}
+
+			// Perform any necessary cleanup.
+			break;
+	}
+	return TRUE;  // Successful DLL_PROCESS_ATTACH.
+}
+#endif
+
+#endif
+
 

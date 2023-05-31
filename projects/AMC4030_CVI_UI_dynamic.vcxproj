@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{5bf56106-00be-429c-9466-9f109a0b96a2}</ProjectGuid>
+    <RootNamespace>AMC4030CVIUIdynamic</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <EnableUnitySupport>true</EnableUnitySupport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <EnableUnitySupport>true</EnableUnitySupport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <EnableUnitySupport>true</EnableUnitySupport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <EnableUnitySupport>true</EnableUnitySupport>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\ProgramData\National Instruments\CVI2017\include;C:\Program Files %28x86%29\National Instruments\CVI2017\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\ProgramData\National Instruments\CVI2017\extlib\msvc;C:\Program Files %28x86%29\National Instruments\CVI2017\extlib\msvc;$(LibraryPath)</LibraryPath>
+    <IntDir>Build-$(ProjectName)-VS-$(Platform)-$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\</OutDir>
+    <TargetName>AMC4030-CVI-UI-DLL-VS-$(Platform)-$(Configuration)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>C:\ProgramData\National Instruments\CVI2017\include;C:\Program Files %28x86%29\National Instruments\CVI2017\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\ProgramData\National Instruments\CVI2017\extlib\msvc;C:\Program Files %28x86%29\National Instruments\CVI2017\extlib\msvc;$(LibraryPath)</LibraryPath>
+    <IntDir>Build-$(ProjectName)-VS-$(Platform)-$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\</OutDir>
+    <TargetName>AMC4030-CVI-UI-DLL-VS-$(Platform)-$(Configuration)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\ProgramData\National Instruments\CVI2017\include;C:\Program Files %28x86%29\National Instruments\CVI2017\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\ProgramData\National Instruments\CVI2017\extlib\msvc64;C:\Program Files %28x86%29\National Instruments\CVI2017\extlib\msvc64;$(LibraryPath)</LibraryPath>
+    <IntDir>Build-$(ProjectName)-VS-$(Platform)-$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\</OutDir>
+    <TargetName>AMC4030-CVI-UI-DLL-VS-$(Platform)-$(Configuration)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>C:\ProgramData\National Instruments\CVI2017\include;C:\Program Files %28x86%29\National Instruments\CVI2017\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\ProgramData\National Instruments\CVI2017\extlib\msvc64;C:\Program Files %28x86%29\National Instruments\CVI2017\extlib\msvc64;$(LibraryPath)</LibraryPath>
+    <IntDir>Build-$(ProjectName)-VS-$(Platform)-$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\</OutDir>
+    <TargetName>AMC4030-CVI-UI-DLL-VS-$(Platform)-$(Configuration)</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>AMC4030_UI_BUILD;AMC4030_UI_DYNAMIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>cvirt.lib;cvisupp.lib;SetupAPI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <IgnoreSpecificDefaultLibraries>libcmt</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>AMC4030_UI_BUILD;AMC4030_UI_DYNAMIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>cvirt.lib;cvisupp.lib;SetupAPI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <IgnoreSpecificDefaultLibraries>libcmt</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>AMC4030_UI_BUILD;AMC4030_UI_DYNAMIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>cvirt.lib;cvisupp.lib;SetupAPI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>libcmt</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>AMC4030_UI_BUILD;AMC4030_UI_DYNAMIC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>cvirt.lib;cvisupp.lib;SetupAPI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>libcmt</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectReference Include="AMC4030_usb_proto_dynamic.vcxproj">
+      <Project>{de92b49b-63b3-4704-be07-8f358133df8a}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Callbacks.c" />
+    <ClCompile Include="..\..\SerialDevice_Panel.c" />
+    <ClCompile Include="..\..\ThreadCompat.c" />
+    <ClCompile Include="..\..\ui_shared.c" />
+    <ClCompile Include="..\AMC4030_DeviceEnumerator.c" />
+    <ClCompile Include="..\AMC4030_DeviceEnumerator_Win32.c" />
+    <ClCompile Include="..\AMC4030_InstanceMonitor.c" />
+    <ClCompile Include="..\AMC4030_UI.c" />
+    <ClCompile Include="..\AMC4030_UI_bindings.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Callbacks.h" />
+    <ClInclude Include="..\..\SerialDevice_Panel.h" />
+    <ClInclude Include="..\..\ThreadCompat.h" />
+    <ClInclude Include="..\..\ui_shared.h" />
+    <ClInclude Include="..\AMC4030_DeviceEnumerator.h" />
+    <ClInclude Include="..\AMC4030_InstanceMonitor.h" />
+    <ClInclude Include="..\AMC4030_Panel.h" />
+    <ClInclude Include="..\AMC4030_UI.h" />
+    <ClInclude Include="..\AMC4030_UI_Internal.h" />
+    <ClInclude Include="..\cvi_uir_AMC4030.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

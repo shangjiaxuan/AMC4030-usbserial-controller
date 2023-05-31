@@ -1,4 +1,4 @@
-#include "AMC4030_UI.h"
+#include "AMC4030_UI_Internal.h"
 
 #include "../toolbox.h"
 

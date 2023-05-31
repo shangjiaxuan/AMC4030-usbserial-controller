@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\AMC4030_DeviceEnumerator.c" />
+    <ClCompile Include="..\AMC4030_DeviceEnumerator_Win32.c" />
+    <ClCompile Include="..\AMC4030_InstanceMonitor.c" />
+    <ClCompile Include="..\AMC4030_UI.c" />
+    <ClCompile Include="..\AMC4030_UI_bindings.c" />
+    <ClCompile Include="..\..\ui_shared.c">
+      <Filter>dep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ThreadCompat.c">
+      <Filter>dep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Callbacks.c">
+      <Filter>dep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\SerialDevice_Panel.c">
+      <Filter>dep</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\AMC4030_DeviceEnumerator.h" />
+    <ClInclude Include="..\AMC4030_InstanceMonitor.h" />
+    <ClInclude Include="..\AMC4030_Panel.h" />
+    <ClInclude Include="..\AMC4030_UI.h" />
+    <ClInclude Include="..\cvi_uir_AMC4030.h" />
+    <ClInclude Include="..\..\ui_shared.h">
+      <Filter>dep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ThreadCompat.h">
+      <Filter>dep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Callbacks.h">
+      <Filter>dep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\SerialDevice_Panel.h">
+      <Filter>dep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AMC4030_UI_Internal.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="dep">
+      <UniqueIdentifier>{0576fc5a-578b-45fe-b8c4-206224f61f10}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
