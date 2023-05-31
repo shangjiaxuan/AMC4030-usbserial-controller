@@ -1,4 +1,6 @@
 # AMC4030-usbserial-controller
+![protocol build](https://github.com/shangjiaxuan/AMC4030-usbserial-controller/actions/workflows/publish.yml/badge.svg)
+
 Reverse engineered AMC4030 motion controller usbserial protocol. Along with a labwindows/cvi implemented ui frontend.
 
 ![CVI Frontend Image](img/cvi_panel.PNG)

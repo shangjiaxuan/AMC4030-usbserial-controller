@@ -79,24 +79,28 @@
     <IncludePath>C:\ProgramData\National Instruments\CVI2017\include;C:\Program Files %28x86%29\National Instruments\CVI2017\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\ProgramData\National Instruments\CVI2017\extlib\msvc;C:\Program Files %28x86%29\National Instruments\CVI2017\extlib\msvc;$(LibraryPath)</LibraryPath>
     <IntDir>Build-$(ProjectName)-VS-$(Platform)-$(Configuration)\</IntDir>
+    <OutDir>..\Build\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetName>$(ProjectName)-VS-$(Platform)-$(Configuration)</TargetName>
     <IncludePath>C:\ProgramData\National Instruments\CVI2017\include;C:\Program Files %28x86%29\National Instruments\CVI2017\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\ProgramData\National Instruments\CVI2017\extlib\msvc;C:\Program Files %28x86%29\National Instruments\CVI2017\extlib\msvc;$(LibraryPath)</LibraryPath>
     <IntDir>Build-$(ProjectName)-VS-$(Platform)-$(Configuration)\</IntDir>
+    <OutDir>..\Build\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>$(ProjectName)-VS-$(Platform)-$(Configuration)</TargetName>
     <IncludePath>C:\ProgramData\National Instruments\CVI2017\include;C:\Program Files %28x86%29\National Instruments\CVI2017\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\ProgramData\National Instruments\CVI2017\extlib\msvc64;C:\Program Files %28x86%29\National Instruments\CVI2017\extlib\msvc64;$(LibraryPath)</LibraryPath>
     <IntDir>Build-$(ProjectName)-VS-$(Platform)-$(Configuration)\</IntDir>
+    <OutDir>..\Build\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetName>$(ProjectName)-VS-$(Platform)-$(Configuration)</TargetName>
     <IncludePath>C:\ProgramData\National Instruments\CVI2017\include;C:\Program Files %28x86%29\National Instruments\CVI2017\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\ProgramData\National Instruments\CVI2017\extlib\msvc64;C:\Program Files %28x86%29\National Instruments\CVI2017\extlib\msvc64;$(LibraryPath)</LibraryPath>
     <IntDir>Build-$(ProjectName)-VS-$(Platform)-$(Configuration)\</IntDir>
+    <OutDir>..\Build\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

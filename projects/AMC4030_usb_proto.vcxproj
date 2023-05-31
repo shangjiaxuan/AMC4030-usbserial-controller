@@ -76,15 +76,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IntDir>Build-$(ProjectName)-VS-$(Platform)-$(Configuration)\</IntDir>
+    <OutDir>..\Build\</OutDir>
+    <TargetName>AMC4030-usbserial-protocol-static-$(Platform)-$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IntDir>Build-$(ProjectName)-VS-$(Platform)-$(Configuration)\</IntDir>
+    <OutDir>..\Build\</OutDir>
+    <TargetName>AMC4030-usbserial-protocol-static-$(Platform)-$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IntDir>Build-$(ProjectName)-VS-$(Platform)-$(Configuration)\</IntDir>
+    <OutDir>..\Build\</OutDir>
+    <TargetName>AMC4030-usbserial-protocol-static-$(Platform)-$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IntDir>Build-$(ProjectName)-VS-$(Platform)-$(Configuration)\</IntDir>
+    <OutDir>..\Build\</OutDir>
+    <TargetName>AMC4030-usbserial-protocol-static-$(Platform)-$(Configuration)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

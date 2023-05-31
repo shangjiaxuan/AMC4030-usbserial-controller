@@ -1,0 +1,66 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+name: Publish release
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  BUILD_CONFIGURATION: Release
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Add MSBuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
+
+      - name: Build X86 static
+        working-directory: ${{env.GITHUB_WORKSPACE}}
+        run: msbuild /m /p:Configuration=Release /p:Platform=Win32 projects/AMC4030_usb_proto.vcxproj
+      - name: Build X86 dynamic
+        working-directory: ${{env.GITHUB_WORKSPACE}}
+        run: msbuild /m /p:Configuration=Release /p:Platform=Win32 projects/AMC4030_usb_proto_dynamic.vcxproj
+      - name: Build X64 static
+        working-directory: ${{env.GITHUB_WORKSPACE}}
+        run: msbuild /m /p:Configuration=Release /p:Platform=x64 projects/AMC4030_usb_proto.vcxproj
+      - name: Build X64 dynamic
+        working-directory: ${{env.GITHUB_WORKSPACE}}
+        run: msbuild /m /p:Configuration=Release /p:Platform=x64 projects/AMC4030_usb_proto_dynamic.vcxproj
+
+      - name: Gather MSVC build
+        working-directory: ${{env.GITHUB_WORKSPACE}}
+        run: |
+          mkdir windows_msvc_build
+          mkdir windows_msvc_build\bin
+          mkdir windows_msvc_build\lib
+          mkdir windows_msvc_build\include
+          copy *.dll windows_msvc_build\bin
+          copy *.lib windows_msvc_build\lib
+          copy *.exp windows_msvc_build\lib
+          copy *.pdb windows_msvc_build\bin
+          copy Build\*.lib windows_msvc_build\lib
+          copy Build\*.pdb windows_msvc_build\bin
+          copy Protocol\AMC4030_usb_com_protocol.h windows_msvc_build\include
+      
+      - name: Archive build
+        working-directory: "${{env.GITHUB_WORKSPACE}}windows_msvc_build"
+        run: |
+          7z a -tzip windows_msvc_build
+          move windows_msvc_build.zip ..\amc4030_windows_msvc_build.zip
+
+      - name: Publish release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          title: "Protocol Automatic Build"
+          automatic_release_tag: "latest"
+          prerelease: false
+          files: |
+            amc4030_windows_msvc_build.zip
