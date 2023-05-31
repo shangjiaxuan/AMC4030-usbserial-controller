@@ -5,7 +5,7 @@
 #include "AMC4030_UI.h"
 
 
-#include "../SerialDevice_Panel.h"
+#include "library_required/SerialDevice_Panel.h"
 
 typedef struct AMC4030_UI_UIControls
 {

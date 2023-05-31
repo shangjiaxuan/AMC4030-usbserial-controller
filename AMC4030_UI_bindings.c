@@ -1,6 +1,9 @@
 #include "AMC4030_UI_Internal.h"
 
-#include "../toolbox.h"
+#ifndef errChk
+#define errChk(fCall) if (error = (fCall), error < 0) \
+{goto Error;} else
+#endif
 
 static int AMC4030_UI_Object_OnCommit_Home_X(AMC4030_UI_Object* obj)
 {

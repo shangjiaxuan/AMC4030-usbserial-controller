@@ -5,9 +5,9 @@
 
 #include "Protocol/AMC4030_usb_com_protocol.h"
 
-#include "../ThreadCompat.h"
+#include "library_required/ThreadCompat.h"
 
-#include "../Callbacks.h"
+#include "library_required/Callbacks.h"
 
 typedef struct AMC4030_InstanceMonitor
 {
