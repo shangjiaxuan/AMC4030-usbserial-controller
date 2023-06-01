@@ -26,6 +26,32 @@
       <Project>{5bf56106-00be-429c-9466-9f109a0b96a2}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="cvibuild.AMC4030-CVI-frontend\Debug64\resources.res">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Resource>
+    <Resource Include="cvibuild.AMC4030-CVI-frontend\Debug\resources.res">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Resource>
+    <Resource Include="cvibuild.AMC4030-CVI-frontend\Release64\resources.res">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Resource>
+    <Resource Include="cvibuild.AMC4030-CVI-frontend\Release\resources.res">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Resource>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -84,6 +110,7 @@
     <OutDir>$(SolutionDir)..\</OutDir>
     <TargetName>AMC4030-CVI-UI-VS-$(Platform)-$(Configuration)</TargetName>
     <IntDir>Build-$(ProjectName)-VS-$(Platform)-$(Configuration)\</IntDir>
+    <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>C:\ProgramData\National Instruments\CVI2017\extlib\msvc;C:\Program Files %28x86%29\National Instruments\CVI2017\extlib\msvc;$(LibraryPath)</LibraryPath>
@@ -91,6 +118,7 @@
     <OutDir>$(SolutionDir)..\</OutDir>
     <TargetName>AMC4030-CVI-UI-VS-$(Platform)-$(Configuration)</TargetName>
     <IntDir>Build-$(ProjectName)-VS-$(Platform)-$(Configuration)\</IntDir>
+    <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LibraryPath>C:\ProgramData\National Instruments\CVI2017\extlib\msvc64;C:\Program Files %28x86%29\National Instruments\CVI2017\extlib\msvc64;$(LibraryPath)</LibraryPath>
@@ -98,6 +126,7 @@
     <OutDir>$(SolutionDir)..\</OutDir>
     <TargetName>AMC4030-CVI-UI-VS-$(Platform)-$(Configuration)</TargetName>
     <IntDir>Build-$(ProjectName)-VS-$(Platform)-$(Configuration)\</IntDir>
+    <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LibraryPath>C:\ProgramData\National Instruments\CVI2017\extlib\msvc64;C:\Program Files %28x86%29\National Instruments\CVI2017\extlib\msvc64;$(LibraryPath)</LibraryPath>
@@ -105,6 +134,7 @@
     <OutDir>$(SolutionDir)..\</OutDir>
     <TargetName>AMC4030-CVI-UI-VS-$(Platform)-$(Configuration)</TargetName>
     <IntDir>Build-$(ProjectName)-VS-$(Platform)-$(Configuration)\</IntDir>
+    <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

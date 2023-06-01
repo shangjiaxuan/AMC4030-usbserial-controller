@@ -1,5 +1,7 @@
 #include "AMC4030_UI_Internal.h"
 
+#include <userint.h>
+
 #ifndef errChk
 #define errChk(fCall) if (error = (fCall), error < 0) \
 {goto Error;} else

@@ -10,7 +10,7 @@ The sdk from manufacturer's `AMC4030.dll`'s design have several fatal flaws:
 
 1. Every call to `COM_API_SetComType` creates a MFC thread that never terminates.
 2. Multiple calls of `COM_API_SetComType` causes internal race condition
-3. Requires `mfc110u.dll` to run.
+3. Protocol itself requires `mfc110u.dll` to run.
 4. The first `ch340 usbserial device` enumerated was used, can be erronous if using ch340 converters for other device, 
 and cannot support multiple device instances.
 5. Binary distribution, not easily portable to new platforms.

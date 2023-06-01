@@ -3,4 +3,10 @@
   <ItemGroup>
     <ClCompile Include="..\standalone-main.c" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="cvibuild.AMC4030-CVI-frontend\Debug64\resources.res" />
+    <Resource Include="cvibuild.AMC4030-CVI-frontend\Release64\resources.res" />
+    <Resource Include="cvibuild.AMC4030-CVI-frontend\Debug\resources.res" />
+    <Resource Include="cvibuild.AMC4030-CVI-frontend\Release\resources.res" />
+  </ItemGroup>
 </Project>
