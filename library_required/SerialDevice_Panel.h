@@ -65,6 +65,8 @@ typedef struct SerialDevice_UI_Object
 	unsigned int cvi_thread_id;
 
 	int need_device_refresh;
+
+	int disallow_user_control;
 }SerialDevice_UI_Object;
 
 
@@ -90,5 +92,11 @@ int SerialDevice_UI_Object_UpdateStatus(SerialDevice_UI_Object* obj);
 
 int SerialDevice_UI_Object_ShowUI(SerialDevice_UI_Object* obj);
 int SerialDevice_UI_Object_HideUI(SerialDevice_UI_Object* obj);
+
+
+int SerialDevice_UI_Object_Lock(SerialDevice_UI_Object* obj);
+int SerialDevice_UI_Object_Unlock(SerialDevice_UI_Object* obj);
+
+int SerialDevice_UI_Object_SetUserControl(SerialDevice_UI_Object* obj);
 
 #endif

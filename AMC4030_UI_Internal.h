@@ -37,12 +37,17 @@ typedef struct AMC4030_UI_UIControls
 
 #include "AMC4030_InstanceMonitor.h"
 
+#include "library_required/ThreadCompat.h"
+
 typedef struct AMC4030_UI_Object
 {
 	SerialDevice_UI_Object base;
 	AMC4030_UI_UIControls controls;
 
 	AMC4030_InstanceMonitor monitor;
+
+	COND_VAR wait_stop;
+	MUTEX_T wait_stop_mtx;
 
 	CallbackChain updateHook;
 	CallbackChain deviceRefreshHook;
@@ -90,6 +95,8 @@ typedef struct AMC4030_UI_Object
 	CallbackChain resume_all;
 
 	int readback_out;
+
+	int allow_control;
 }AMC4030_UI_Object;
 
 int AMC4030_UI_Object_Initialize(AMC4030_UI_Object* obj, const char* uir_file, int use_as_standalone);

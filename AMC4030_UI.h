@@ -42,7 +42,9 @@ AMC4030_UI_SYMBOL int AMC4030_UI_Object_ResumeAll(AMC4030_UI_Object* obj);
 
 AMC4030_UI_SYMBOL int AMC4030_UI_Object_SetOutput(AMC4030_UI_Object* obj, uint8_t out_no, uint8_t val);
 
+AMC4030_UI_SYMBOL int AMC4030_UI_Object_Lock(AMC4030_UI_Object* obj);
+AMC4030_UI_SYMBOL int AMC4030_UI_Object_Unlock(AMC4030_UI_Object* obj);
 // not implemented yet
-int AMC4030_UI_Object_WaitStop(AMC4030_UI_Object* obj);
+AMC4030_UI_SYMBOL int AMC4030_UI_Object_WaitStop(AMC4030_UI_Object* obj);
 
 #endif

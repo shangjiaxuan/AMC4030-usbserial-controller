@@ -425,6 +425,9 @@ int AMC4030_UI_Object_Initialize(AMC4030_UI_Object* obj, const char* uir_file, i
 	CallbackChain_Append(&obj->base.onStatusUpdate, &obj->updateHook);
 
 	obj->readback_out = 1;
+
+	COND_INIT(&obj->wait_stop);
+	INIT_MUTEX(&obj->wait_stop_mtx);
 Error:
 	return error;
 }

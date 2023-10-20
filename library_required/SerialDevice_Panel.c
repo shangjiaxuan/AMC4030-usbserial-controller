@@ -21,6 +21,7 @@
 void SerialDevice_UI_Object_Destroy(SerialDevice_UI_Object* obj)
 {
 	obj->monitor_funcs->Stop(obj->monitor);
+	obj->connection_funcs->Delete(obj->monitor_funcs->GetConnection(obj->monitor));
 	obj->monitor_funcs->SetConnection(obj->monitor, 0);
 	obj->monitor_funcs->UnRegisterListener(obj->monitor, &obj->updateListener);
 	obj->monitor_funcs->UnRegisterEndListener(obj->monitor, &obj->stopListener);
@@ -118,7 +119,7 @@ int SerialDevice_UI_Object_GetSelectedCommDev(SerialDevice_UI_Object* obj)
 		errChk(GetCtrlIndex(obj->controls->panel, obj->controls->device_select, &index));
 		errChk(GetValueLengthFromIndex(obj->controls->panel, obj->controls->device_select, index, &string_len));
 	}
-	if (string_len > obj->port_file_buffer_size - 1) {
+	if ((size_t)string_len > obj->port_file_buffer_size - 1) {
 		if (obj->port_file_name != obj->port_file_short_buffer) {
 			char* new_buffer = (char*)malloc((size_t)string_len + 1);
 			free(obj->port_file_name);
@@ -132,13 +133,33 @@ int SerialDevice_UI_Object_GetSelectedCommDev(SerialDevice_UI_Object* obj)
 			}
 		}
 	}
-	if (obj->port_file_buffer_size > string_len) {
+	if (obj->port_file_buffer_size > (size_t)string_len) {
 		errChk(GetCtrlVal(obj->controls->panel, obj->controls->device_select, obj->port_file_name));
 	}
 	else {
 		error = UIEOutOfMemory;
 	}
 Error:
+	return error;
+}
+
+int SerialDevice_UI_Object_SetupConnectStateUI(SerialDevice_UI_Object* obj)
+{
+	int error = UIENoError;
+	if (obj->is_connected) {
+		errChk(SetCtrlVal(obj->controls->panel, obj->controls->connect, 1));
+		errChk(SetCtrlArrayAttribute(obj->controls->select_mode_array, ATTR_DIMMED, 1));
+		errChk(SetCtrlArrayAttribute(obj->controls->connected_mode_array, ATTR_DIMMED, 0));
+	}
+	else {
+		errChk(SetCtrlVal(obj->controls->panel, obj->controls->connect, 0));
+		errChk(SetCtrlArrayAttribute(obj->controls->select_mode_array, ATTR_DIMMED, 0));
+		errChk(SetCtrlArrayAttribute(obj->controls->connected_mode_array, ATTR_DIMMED, 1));
+		if (obj->need_device_refresh) {
+			errChk(SerialDevice_UI_Object_RefreshDevices(obj));
+		}
+	}
+	Error:
 	return error;
 }
 
@@ -149,30 +170,27 @@ int SerialDevice_UI_Object_Connect(SerialDevice_UI_Object* obj)
 	void* connection = obj->connection_funcs->Create(obj->port_file_name, &error);
 	obj->monitor_funcs->SetConnection(obj->monitor, connection);
 	if (connection) {
-		errChk(SetCtrlVal(obj->controls->panel, obj->controls->connect, 1))
-		errChk(SetCtrlArrayAttribute(obj->controls->select_mode_array, ATTR_DIMMED, 1));
-		errChk(SetCtrlArrayAttribute(obj->controls->connected_mode_array, ATTR_DIMMED, 0));
 		errChk(obj->monitor_funcs->Start(obj->monitor));
 	}
 	else {
-		// report error
+		obj->is_connected = 0;
+		// report error?
 		error = UIEOperationFailed;
 	}
+	errChk(SerialDevice_UI_Object_SetupConnectStateUI(obj));
 Error:
 	return error;
 }
 
 int SerialDevice_UI_Object_DisConnect(SerialDevice_UI_Object* obj)
 {
-	obj->monitor_funcs->Stop(obj->monitor);
-	obj->monitor_funcs->SetConnection(obj->monitor, 0);
 	int error = UIENoError;
-	errChk(SetCtrlVal(obj->controls->panel, obj->controls->connect, 0));
-	errChk(SetCtrlArrayAttribute(obj->controls->select_mode_array, ATTR_DIMMED, 0));
-	errChk(SetCtrlArrayAttribute(obj->controls->connected_mode_array, ATTR_DIMMED, 1));
-	if (obj->need_device_refresh) {
-		errChk(SerialDevice_UI_Object_RefreshDevices(obj));
-	}
+	// must destroy anyway, not errChk
+	obj->monitor_funcs->Stop(obj->monitor);
+	obj->connection_funcs->Delete(obj->monitor_funcs->GetConnection(obj->monitor));
+	obj->monitor_funcs->SetConnection(obj->monitor, 0);
+	obj->is_connected = 0;
+	errChk(SerialDevice_UI_Object_SetupConnectStateUI(obj));
 Error:
 	return error;
 }
@@ -187,8 +205,37 @@ int SerialDevice_UI_Object_UpdateConnected(SerialDevice_UI_Object* obj)
 	}
 }
 
+int SerialDevice_UI_Object_SetUserControl(SerialDevice_UI_Object* obj)
+{
+	int error = UIENoError;
+	if (obj->disallow_user_control) {
+		errChk(SetCtrlAttribute(obj->controls->panel, obj->controls->connect, ATTR_DIMMED, 1));
+		errChk(SetCtrlArrayAttribute(obj->controls->select_mode_array, ATTR_DIMMED, 1));
+		errChk(SetCtrlArrayAttribute(obj->controls->connected_mode_array, ATTR_DIMMED, 1));
+	}
+	else {
+		errChk(SetCtrlAttribute(obj->controls->panel, obj->controls->connect, ATTR_DIMMED, 0));
+		errChk(SerialDevice_UI_Object_SetupConnectStateUI(obj));
+	}
+Error:
+	return error;
+}
+
+int SerialDevice_UI_Object_Lock(SerialDevice_UI_Object* obj)
+{
+	obj->disallow_user_control = 1;
+	return SerialDevice_UI_Object_SetUserControl(obj);
+}
+
+int SerialDevice_UI_Object_Unlock(SerialDevice_UI_Object* obj)
+{
+	obj->disallow_user_control = 0;
+	return SerialDevice_UI_Object_SetUserControl(obj);
+}
+
 int SerialDevice_UI_Object_UpdateThreadEnding(SerialDevice_UI_Object* obj)
 {
+	obj->connection_funcs->Delete(obj->monitor_funcs->GetConnection(obj->monitor));
 	obj->monitor_funcs->SetConnection(obj->monitor, 0);
 	obj->connection_need_cleanup = 1;
 	int error = UIENoError;

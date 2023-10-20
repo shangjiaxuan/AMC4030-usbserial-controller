@@ -14,7 +14,7 @@
 int CVICALLBACK Generic_Action(int panel, int control, int event, void* callbackData, int eventData1, int eventData2)
 {
 	int error = UIENoError;
-	assert(callbackData != 0);
+	assert(callbackData != NULL);
 	ActionCallback ac = callbackData;
 	switch (event) {
 		case EVENT_COMMIT:
@@ -34,7 +34,7 @@ int CVICALLBACK Generic_AnyCall(int panel, int control, int event,
 	void* callbackData, int eventData1, int eventData2)
 {
 	int error = UIENoError;
-	assert(callbackData != 0);
+	assert(callbackData != NULL);
 	switch (event) {
 		case EVENT_COMMIT:
 			errChk(GetCtrlVal(panel, control, callbackData));
@@ -51,7 +51,7 @@ int CVICALLBACK Generic_AnyHookCall(int panel, int control, int event,
 	void* callbackData, int eventData1, int eventData2)
 {
 	int error = UIENoError;
-	assert(callbackData != 0);
+	assert(callbackData != NULL);
 	DataHook* info = callbackData;
 	switch (event) {
 		case EVENT_COMMIT:
@@ -75,9 +75,9 @@ int CVICALLBACK Generic_HookCall(int panel, int control, int event,
 	void* callbackData, int eventData1, int eventData2)
 {
 	int error = UIENoError;
-	assert(callbackData != 0);
+	assert(callbackData != NULL);
 	CallbackChain* info = callbackData;
-	assert(info != 0);
+	assert(info != NULL);
 	switch (event) {
 		case EVENT_COMMIT:
 		{
@@ -97,9 +97,9 @@ int CVICALLBACK Generic_TimerCall(int panel, int control, int event,
 	void* callbackData, int eventData1, int eventData2)
 {
 	int error = UIENoError;
-	assert(callbackData != 0);
+	assert(callbackData != NULL);
 	CallbackChain* info = callbackData;
-	assert(info != 0);
+	assert(info != NULL);
 	switch (event) {
 		case EVENT_TIMER_TICK:
 		{
@@ -118,9 +118,9 @@ Error:
 int CVICALLBACK Generic_ButtonLongCall(int panel, int control, int event, void* callbackData, int eventData1, int eventData2)
 {
 	int error = UIENoError;
-	assert(callbackData != 0);
+	assert(callbackData != NULL);
 	ButtonLongCallback* info = callbackData;
-	assert(info != 0);
+	assert(info != NULL);
 	switch (event) {
 		case EVENT_LEFT_CLICK:
 			if (!*info->single_event_mode && !info->pressed) {

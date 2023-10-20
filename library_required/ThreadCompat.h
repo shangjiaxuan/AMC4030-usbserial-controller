@@ -32,6 +32,15 @@ void JoinThread(ThreadHandle handle);
 #define RWLOCK_UNLOCK_WRITE(mtx) ReleaseSRWLockExclusive(mtx)
 #define RWLOCK_DESTROY(mtx) (mtx)
 
+
+#define COND_VAR CONDITION_VARIABLE
+#define COND_INIT(cond) InitializeConditionVariable(cond)
+#define COND_WAIT_MTX(cond, mtx) SleepConditionVariableCS(cond, mtx, INFINITE)
+#define COND_WAIT_READ_RWL(cond, mtx) SleepConditionVariableSRW(cond, mtx, INFINITE, CONDITION_VARIABLE_LOCKMODE_SHARED)
+#define COND_WAIT_WRITE_RWL(cond, mtx) SleepConditionVariableSRW(cond, mtx, INFINITE, 0)
+#define COND_NOTIFY_ONE(cond) WakeConditionVariable(cond)
+#define COND_NOTIFY_ALL(cond) WakeAllConditionVariable(cond)
+
 #else
 
 #endif

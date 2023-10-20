@@ -73,6 +73,9 @@ int AMC4030_UI_Object_UpdateStatus(AMC4030_UI_Object* obj)
 	errChk(SetCtrlVal(obj->controls.base.panel, obj->controls.paused, (status & 0x01) != 0));
 	errChk(SetCtrlVal(obj->controls.base.panel, obj->controls.working, (status & 0x02) != 0));
 	errChk(SetCtrlVal(obj->controls.base.panel, obj->controls.moving, (status & 0x04) != 0));
+	if ((status & 0x04) == 0) {
+		COND_NOTIFY_ALL(&obj->wait_stop);
+	}
 	errChk(SetCtrlVal(obj->controls.base.panel, obj->controls.returning, (status & 0x08) != 0));
 	int alarm = (status & 0x10) != 0;
 	if (alarm) {
@@ -156,6 +159,24 @@ int AMC4030_UI_Object_SetOutput(AMC4030_UI_Object* obj, uint8_t out_no, uint8_t 
 	return AMC4030_usb_protocol_SetCoil(obj->monitor.connection, out_no, val);
 }
 
+int AMC4030_UI_Object_Lock(AMC4030_UI_Object* obj)
+{
+	return SerialDevice_UI_Object_Lock(&obj->base);
+}
+int AMC4030_UI_Object_Unlock(AMC4030_UI_Object* obj)
+{
+	return SerialDevice_UI_Object_Unlock(&obj->base);
+}
+
+int AMC4030_UI_Object_WaitStop(AMC4030_UI_Object* obj)
+{
+	LOCK_MUTEX(&obj->wait_stop_mtx);
+	while ((obj->monitor.current_status.dwWorkStatus & 0x04) != 0){
+		COND_WAIT_MTX(&obj->wait_stop, &obj->wait_stop_mtx);
+	}
+	UNLOCK_MUTEX(&obj->wait_stop_mtx);
+	return 0;
+}
 
 #ifdef AMC4030_UI_DYNAMIC
 #ifdef _WIN32

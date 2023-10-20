@@ -17,9 +17,6 @@ void AMC4030_InstanceMonitor_SetConnection(AMC4030_InstanceMonitor* obj, AMC4030
 	AMC4030_usb_protocol_context* prev_connection = obj->connection;
 	if (prev_connection != connection) {
 		obj->connection = connection;
-		if (prev_connection) {
-			AMC4030_usb_protocol_Destroy(prev_connection);
-		}
 	}
 }
 AMC4030_usb_protocol_context* AMC4030_InstanceMonitor_GetConnection(AMC4030_InstanceMonitor* obj)
