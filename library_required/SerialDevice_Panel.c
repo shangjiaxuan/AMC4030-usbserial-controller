@@ -74,6 +74,17 @@ int SerialDevice_UI_Object_RefreshDevices(SerialDevice_UI_Object* obj)
 	int error = UIENoError;
 	void* enumerator = NULL;
 	int index = 0;
+	int need_check_prev = 0;
+	error = SerialDevice_UI_Object_GetSelectedCommDev(obj);
+	if (error < 0 && error != UIENoItemsInList) {
+		goto Error;
+	}
+	if (error == UIENoItemsInList) {
+		error = UIENoError;
+	}
+	else {
+		need_check_prev = 1;
+	}
 	if (obj->onDeviceRefresh) {
 		errChk(CallbackChain_Invoke(obj->onDeviceRefresh));
 	}
@@ -89,12 +100,21 @@ int SerialDevice_UI_Object_RefreshDevices(SerialDevice_UI_Object* obj)
 	do {
 		device_file = obj->device_enumerator_funcs->Next(enumerator);
 		if (device_file) {
+			if (need_check_prev) {
+				if (strcmp(device_file, obj->port_file_name) == 0) {
+					need_check_prev = 0;
+					obj->selected_index = index;
+				}
+			}
 			errChk(obj->device_enumerator_funcs->GetCurrentFriendlyName(enumerator, buffer, sizeof(buffer)));
 			errChk(InsertListItem(obj->controls->panel, obj->controls->device_select, index, buffer, device_file));
 			++index;
 		}
 	} while (device_file);
 	obj->port_count = index;
+	if (obj->selected_index>=0 && index > obj->selected_index) {
+		errChk(SetCtrlIndex(obj->controls->panel, obj->controls->device_select, obj->selected_index));
+	}
 	if (!obj->port_count) {
 		errChk(SetCtrlAttribute(obj->controls->panel, obj->controls->connect, ATTR_DIMMED, 1));
 	}
@@ -115,9 +135,11 @@ int SerialDevice_UI_Object_GetSelectedCommDev(SerialDevice_UI_Object* obj)
 	int error = UIENoError;
 	int string_len;
 	{
-		int index;
-		errChk(GetCtrlIndex(obj->controls->panel, obj->controls->device_select, &index));
-		errChk(GetValueLengthFromIndex(obj->controls->panel, obj->controls->device_select, index, &string_len));
+		errChk(GetCtrlIndex(obj->controls->panel, obj->controls->device_select, &obj->selected_index));
+		if (obj->selected_index < 0) {
+			return UIENoItemsInList;
+		}
+		errChk(GetValueLengthFromIndex(obj->controls->panel, obj->controls->device_select, obj->selected_index, &string_len));
 	}
 	if ((size_t)string_len > obj->port_file_buffer_size - 1) {
 		if (obj->port_file_name != obj->port_file_short_buffer) {
@@ -165,8 +187,20 @@ int SerialDevice_UI_Object_SetupConnectStateUI(SerialDevice_UI_Object* obj)
 
 int SerialDevice_UI_Object_Connect(SerialDevice_UI_Object* obj)
 {
+	obj->is_connected = 1;
+	return SerialDevice_UI_Object_Connect_Do(obj);
+}
+int SerialDevice_UI_Object_DisConnect(SerialDevice_UI_Object* obj)
+{
+	obj->is_connected = 0;
+	return SerialDevice_UI_Object_DisConnect_Do(obj);
+}
+
+
+int SerialDevice_UI_Object_Connect_Do(SerialDevice_UI_Object* obj)
+{
 	int error = UIENoError;
-	errChk(SerialDevice_UI_Object_DisConnect(obj));
+	errChk(SerialDevice_UI_Object_DisConnect_Do(obj));
 	void* connection = obj->connection_funcs->Create(obj->port_file_name, &error);
 	obj->monitor_funcs->SetConnection(obj->monitor, connection);
 	if (connection) {
@@ -182,14 +216,14 @@ Error:
 	return error;
 }
 
-int SerialDevice_UI_Object_DisConnect(SerialDevice_UI_Object* obj)
+int SerialDevice_UI_Object_DisConnect_Do(SerialDevice_UI_Object* obj)
 {
 	int error = UIENoError;
 	// must destroy anyway, not errChk
 	obj->monitor_funcs->Stop(obj->monitor);
 	obj->connection_funcs->Delete(obj->monitor_funcs->GetConnection(obj->monitor));
 	obj->monitor_funcs->SetConnection(obj->monitor, 0);
-	obj->is_connected = 0;
+	//obj->is_connected = 0;
 	errChk(SerialDevice_UI_Object_SetupConnectStateUI(obj));
 Error:
 	return error;
@@ -198,10 +232,10 @@ Error:
 int SerialDevice_UI_Object_UpdateConnected(SerialDevice_UI_Object* obj)
 {
 	if (obj->is_connected) {
-		return SerialDevice_UI_Object_Connect(obj);
+		return SerialDevice_UI_Object_Connect_Do(obj);
 	}
 	else {
-		return SerialDevice_UI_Object_DisConnect(obj);
+		return SerialDevice_UI_Object_DisConnect_Do(obj);
 	}
 }
 

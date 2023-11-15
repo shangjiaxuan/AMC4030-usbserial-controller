@@ -66,6 +66,8 @@ typedef struct SerialDevice_UI_Object
 
 	int need_device_refresh;
 
+	int selected_index;
+
 	int disallow_user_control;
 }SerialDevice_UI_Object;
 
@@ -83,8 +85,10 @@ int SerialDevice_UI_Object_RefreshDevices(SerialDevice_UI_Object* obj);
 int SerialDevice_UI_Object_GetSelectedCommDev(SerialDevice_UI_Object* obj);
 
 int SerialDevice_UI_Object_Connect(SerialDevice_UI_Object* obj);
-
 int SerialDevice_UI_Object_DisConnect(SerialDevice_UI_Object* obj);
+
+int SerialDevice_UI_Object_Connect_Do(SerialDevice_UI_Object* obj);
+int SerialDevice_UI_Object_DisConnect_Do(SerialDevice_UI_Object* obj);
 
 int SerialDevice_UI_Object_UpdateThreadEnding(SerialDevice_UI_Object* obj);
 
