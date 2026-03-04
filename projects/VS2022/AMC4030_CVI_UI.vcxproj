@@ -79,28 +79,28 @@
     <IncludePath>C:\ProgramData\National Instruments\CVI2017\include;C:\Program Files %28x86%29\National Instruments\CVI2017\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\ProgramData\National Instruments\CVI2017\extlib\msvc;C:\Program Files %28x86%29\National Instruments\CVI2017\extlib\msvc;$(LibraryPath)</LibraryPath>
     <IntDir>Build-$(ProjectName)-VS-$(Platform)-$(Configuration)\</IntDir>
-    <OutDir>..\Build\</OutDir>
+    <OutDir>..\..\Build\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetName>$(ProjectName)-VS-$(Platform)-$(Configuration)</TargetName>
     <IncludePath>C:\ProgramData\National Instruments\CVI2017\include;C:\Program Files %28x86%29\National Instruments\CVI2017\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\ProgramData\National Instruments\CVI2017\extlib\msvc;C:\Program Files %28x86%29\National Instruments\CVI2017\extlib\msvc;$(LibraryPath)</LibraryPath>
     <IntDir>Build-$(ProjectName)-VS-$(Platform)-$(Configuration)\</IntDir>
-    <OutDir>..\Build\</OutDir>
+    <OutDir>..\..\Build\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>$(ProjectName)-VS-$(Platform)-$(Configuration)</TargetName>
     <IncludePath>C:\ProgramData\National Instruments\CVI2017\include;C:\Program Files %28x86%29\National Instruments\CVI2017\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\ProgramData\National Instruments\CVI2017\extlib\msvc64;C:\Program Files %28x86%29\National Instruments\CVI2017\extlib\msvc64;$(LibraryPath)</LibraryPath>
     <IntDir>Build-$(ProjectName)-VS-$(Platform)-$(Configuration)\</IntDir>
-    <OutDir>..\Build\</OutDir>
+    <OutDir>..\..\Build\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetName>$(ProjectName)-VS-$(Platform)-$(Configuration)</TargetName>
     <IncludePath>C:\ProgramData\National Instruments\CVI2017\include;C:\Program Files %28x86%29\National Instruments\CVI2017\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\ProgramData\National Instruments\CVI2017\extlib\msvc64;C:\Program Files %28x86%29\National Instruments\CVI2017\extlib\msvc64;$(LibraryPath)</LibraryPath>
     <IntDir>Build-$(ProjectName)-VS-$(Platform)-$(Configuration)\</IntDir>
-    <OutDir>..\Build\</OutDir>
+    <OutDir>..\..\Build\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -172,27 +172,27 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Callbacks.c" />
-    <ClCompile Include="..\..\SerialDevice_Panel.c" />
-    <ClCompile Include="..\..\ThreadCompat.c" />
-    <ClCompile Include="..\..\ui_shared.c" />
-    <ClCompile Include="..\AMC4030_DeviceEnumerator.c" />
-    <ClCompile Include="..\AMC4030_DeviceEnumerator_Win32.c" />
-    <ClCompile Include="..\AMC4030_InstanceMonitor.c" />
-    <ClCompile Include="..\AMC4030_UI.c" />
-    <ClCompile Include="..\AMC4030_UI_bindings.c" />
+    <ClCompile Include="..\..\library_required\Callbacks.c" />
+    <ClCompile Include="..\..\library_required\SerialDevice_Panel.c" />
+    <ClCompile Include="..\..\library_required\ThreadCompat.c" />
+    <ClCompile Include="..\..\library_required\ui_shared.c" />
+    <ClCompile Include="..\..\AMC4030_DeviceEnumerator.c" />
+    <ClCompile Include="..\..\AMC4030_DeviceEnumerator_Win32.c" />
+    <ClCompile Include="..\..\AMC4030_InstanceMonitor.c" />
+    <ClCompile Include="..\..\AMC4030_UI.c" />
+    <ClCompile Include="..\..\AMC4030_UI_bindings.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Callbacks.h" />
-    <ClInclude Include="..\..\SerialDevice_Panel.h" />
-    <ClInclude Include="..\..\ThreadCompat.h" />
-    <ClInclude Include="..\..\ui_shared.h" />
-    <ClInclude Include="..\AMC4030_DeviceEnumerator.h" />
-    <ClInclude Include="..\AMC4030_InstanceMonitor.h" />
-    <ClInclude Include="..\AMC4030_Panel.h" />
-    <ClInclude Include="..\AMC4030_UI.h" />
-    <ClInclude Include="..\AMC4030_UI_Internal.h" />
-    <ClInclude Include="..\cvi_uir_AMC4030.h" />
+    <ClInclude Include="..\..\library_required\Callbacks.h" />
+    <ClInclude Include="..\..\library_required\SerialDevice_Panel.h" />
+    <ClInclude Include="..\..\library_required\ThreadCompat.h" />
+    <ClInclude Include="..\..\library_required\ui_shared.h" />
+    <ClInclude Include="..\..\AMC4030_DeviceEnumerator.h" />
+    <ClInclude Include="..\..\AMC4030_InstanceMonitor.h" />
+    <ClInclude Include="..\..\AMC4030_Panel.h" />
+    <ClInclude Include="..\..\AMC4030_UI.h" />
+    <ClInclude Include="..\..\AMC4030_UI_Internal.h" />
+    <ClInclude Include="..\..\cvi_uir_AMC4030.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

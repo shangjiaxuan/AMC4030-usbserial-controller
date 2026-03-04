@@ -14,9 +14,9 @@ cvibuild.*
 __Previews
 
 #visual studio cache
-projects/.vs/*
-projects/x64/*
-projects/Build-*
+projects/VS2022/.vs/*
+projects/VS2022/x64/*
+projects/VS2022/Build-*
 
 # other binary files, manually add if needed
 *.lib
