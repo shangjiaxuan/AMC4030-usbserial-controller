@@ -38,20 +38,6 @@ jobs:
             echo "No ctest configuration found, skipping tests"
           fi
 
-      - name: Gather build artifacts
-        run: |
-          mkdir -p Build/bin Build/lib Build/include || true
-          # Copy shared libs
-          find ./projects/CMAKE/build -type f -name "*.so*" -exec cp -v {} Build/lib/ \; || true
-          # Copy static libs
-          find ./projects/CMAKE/build -type f -name "*.a*" -exec cp -v {} Build/lib/ \; || true
-          # Copy executables
-          find ./projects/CMAKE/build -type f -executable -exec cp -v {} Build/bin/ \; || true
-          # Copy public header(s)
-          if [ -f Protocol/AMC4030_usb_com_protocol.h ]; then
-            cp -v Protocol/AMC4030_usb_com_protocol.h Build/include/ || true
-          fi
-
       - name: Archive build
         run: |
           zip -r amc4030_linux_cmake_build.zip Build || true
@@ -60,4 +46,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: amc4030_linux_cmake_build
-          path: amc4030_linux_cmake_build.zip
+          path: Build/
