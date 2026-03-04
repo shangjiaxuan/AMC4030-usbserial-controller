@@ -7,6 +7,14 @@
 #define MICROSOFT_WINDOWS_WINBASE_H_DEFINE_INTERLOCKED_CPLUSPLUS_OVERLOADS 0
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
+#elif defined(__linux__)
+#include <pthread.h>
+#include <termios.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
 #endif
 
 #include <stdint.h>
@@ -19,6 +27,9 @@ typedef struct AMC4030_usb_protocol_context
 #ifdef _WIN32
 	HANDLE hFile;
 	CRITICAL_SECTION lock;
+#elif defined(__linux__)
+	int fd;
+	pthread_mutex_t lock;
 #endif
 	uint16_t current_command;
 	uint16_t write_bytes;
