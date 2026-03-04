@@ -1,0 +1,63 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+name: CMake Linux build
+
+on:
+  push:
+    branches: [ "cmake-linux-build" ]
+  pull_request:
+    branches: [ "master", "main" ]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install build deps
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y build-essential cmake ninja-build zip
+
+      - name: Configure with CMake
+        run: cmake -S ./projects/CMAKE -B ./projects/CMAKE/build -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
+
+      - name: Build
+        run: cmake --build ./projects/CMAKE/build --config ${{ env.BUILD_TYPE }} -- -j$(nproc)
+
+      - name: Run tests (if any)
+        run: |
+          if [ -f ./projects/CMAKE/build/CTestTestfile.cmake ]; then
+            ctest --test-dir ./projects/CMAKE/build --output-on-failure || true
+          else
+            echo "No ctest configuration found, skipping tests"
+          fi
+
+      - name: Gather build artifacts
+        run: |
+          mkdir -p Build/bin Build/lib Build/include || true
+          # Copy shared libs
+          find ./projects/CMAKE/build -type f -name "*.so*" -exec cp -v {} Build/lib/ \; || true
+          # Copy static libs
+          find ./projects/CMAKE/build -type f -name "*.a*" -exec cp -v {} Build/lib/ \; || true
+          # Copy executables
+          find ./projects/CMAKE/build -type f -executable -exec cp -v {} Build/bin/ \; || true
+          # Copy public header(s)
+          if [ -f Protocol/AMC4030_usb_com_protocol.h ]; then
+            cp -v Protocol/AMC4030_usb_com_protocol.h Build/include/ || true
+          fi
+
+      - name: Archive build
+        run: |
+          zip -r amc4030_linux_cmake_build.zip Build || true
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: amc4030_linux_cmake_build
+          path: amc4030_linux_cmake_build.zip
