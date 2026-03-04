@@ -51,6 +51,6 @@ install(TARGETS AMC4030_usb_proto_static AMC4030_usb_proto_shared
         ARCHIVE DESTINATION lib
         LIBRARY DESTINATION lib
         RUNTIME DESTINATION bin
-        INCLUDES DESTINATION include)
+        PUBLIC_HEADER DESTINATION include)
 
 message(STATUS "Protocol sources: ${SOURCES}")
